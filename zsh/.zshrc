@@ -1,5 +1,16 @@
+# Prompt Formatting
+#
+# main prompt
 PS1='%S %#%n %~ %s '
-RPS1='%S %* %s'
+# Show git branch in right prompt
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git 
+zstyle ':vcs_info:git:*' formats '(%s)->[%b]'
+zstyle ':vcs_info:git:*' actionformats '(%s)->[%b|%a]'
+precmd() { vcs_info }
+setopt prompt_subst
+RPS1='%S ${vcs_info_msg_0_} %* %s'
+
 
 export PATH=/opt/homebrew/bin:$PATH
 
