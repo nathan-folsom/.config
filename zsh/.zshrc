@@ -1,15 +1,23 @@
 # Prompt Formatting
 #
-# main prompt
 g1=249 # light gray foreground
 g2=238 # dark gray background
-PS1='%K{$g2} %F{$g1}%#%f %F{1}%n%f %F{$g1}%~ %k%f%F{$g2}|>%f'
-# Show git branch in right prompt
+PS1='%K{$g2} %F{$g1}%#%f %F{1}%n%f %F{$g1}%~ %k%f%F{$g2}|>%f' # main prompt
 autoload -Uz vcs_info
+setopt prompt_subst
 zstyle ':vcs_info:*' enable git 
 zstyle ':vcs_info:git:*' formats '%{'%F{$g1}'%}%s/%f%F{1}%b%f%{'%F{$g1}'%}%f'
-precmd() { vcs_info }
-RPS1='%F{$g2}<|%f%K{$g2} ${vcs_info_msg_0_} %F{$g1}%*%f %k'
+formatted=''
+precmd() { 
+  vcs_info
+  if [[ -n $vcs_info_msg_0_ ]]; then
+    formatted=$vcs_info_msg_0_
+  else
+    text=$'%{\e[9m%}git%{\e[0m%}'
+    formatted="%F{$g1}$text%f%K{$g2}"
+  fi
+}
+RPS1='%F{$g2}<|%f%K{$g2} ${formatted} %F{$g1}%*%f %k' # right prompt
 
 
 export PATH=/opt/homebrew/bin:$PATH
