@@ -1,3 +1,7 @@
+# Enable completions
+autoload -Uz compinit
+compinit
+
 # Prompt Formatting
 #
 g1=249 # light gray foreground
