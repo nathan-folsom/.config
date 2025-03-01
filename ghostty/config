@@ -1,2 +1,9 @@
+# Look & Feel
 theme = Monokai Pro
 font-thicken = true
+
+# Keymaps
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+j=goto_split:down
+keybind = ctrl+shift+k=goto_split:up
