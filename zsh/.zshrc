@@ -25,6 +25,7 @@ RPS1='%F{$g2}<|%f%K{$g2} ${formatted} %F{$g1}%*%f %k' # right prompt
 
 
 export PATH=/opt/homebrew/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
