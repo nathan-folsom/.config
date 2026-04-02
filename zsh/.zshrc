@@ -27,6 +27,24 @@ RPS1='%F{$g2}<|%f%K{$g2} ${formatted} %F{$g1}%*%f %k' # right prompt
 export PATH=/opt/homebrew/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
 
+# Ctrl+Z toggle between two suspended jobs
+toggle-fg() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    if [[ $(jobs | wc -l) -ge 2 ]]; then
+      BUFFER="fg %-"
+      zle accept-line
+    elif [[ $(jobs | wc -l) -eq 1 ]]; then
+      BUFFER="fg"
+      zle accept-line
+    fi
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N toggle-fg
+bindkey '^Z' toggle-fg
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
