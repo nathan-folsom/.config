@@ -32,3 +32,20 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+agent() {
+  local old_name ret
+
+  if [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
+    old_name="$(tmux display-message -p '#W' 2>/dev/null)"
+    tmux rename-window cursor >/dev/null 2>&1
+  fi
+
+  command agent "$@"
+  ret=$?
+
+  if [[ -n "$TMUX" && -n "$old_name" ]] && command -v tmux >/dev/null 2>&1; then
+    tmux rename-window "$old_name" >/dev/null 2>&1
+  fi
+
+  return $ret
+}
